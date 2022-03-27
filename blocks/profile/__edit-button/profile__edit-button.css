@@ -12,9 +12,9 @@
   padding: 0;
   grid-area: edit-button;
   margin-top: 5px;
+  cursor: pointer;
 }
 
 .profile__edit-button:hover {
-  cursor: pointer;
   opacity: 0.6;
 }

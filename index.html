@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,50 +19,50 @@
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
         <p class="profile__caption">Исследователь океана</p>
-        <button class="profile__edit-button" aria-label="редактировать профиль"></button>
+        <button type="button" class="profile__edit-button" aria-label="редактировать профиль"></button>
       </div>
-      <button class="profile__add-button" aria-label="добавить фотографии"></button>
+      <button type="button" class="profile__add-button" aria-label="добавить фотографии"></button>
     </section>
 
     <section class="elements">
       <ul class="elements__list">
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-karachaevsk.png" alt="">
+          <img class="elements__image" src="./images/photo-karachaevsk.png" alt="фото Карачаевска">
           <div class="elements__container">
             <h2 class="elements__text">Карачаевск</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
           </div>
         </li>
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-elbrus.png" alt="">
+          <img class="elements__image" src="./images/photo-elbrus.png" alt="фото горы Эльбрус">
           <div class="elements__container">
             <h2 class="elements__text">Гора Эльбрус</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
           </div>
         </li>
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-dombay.png" alt="">
+          <img class="elements__image" src="./images/photo-dombay.png" alt="фото Домбая">
           <div class="elements__container">
             <h2 class="elements__text">Домбай</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
           </div>
         </li>
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-elbrus.png" alt="">
+          <img class="elements__image" src="./images/photo-elbrus.png" alt="фото горы Эльбрус">
           <div class="elements__container">
             <h2 class="elements__text">Гора Эльбрус</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
           </div>
         </li>
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-dombay.png" alt="">
+          <img class="elements__image" src="./images/photo-dombay.png" alt="фото Домбая">
           <div class="elements__container">
             <h2 class="elements__text">Домбай</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
           </div>
         </li>
         <li class="elements__list-item">
-          <img class="elements__image" src="./images/photo-karachaevsk.png" alt="">
+          <img class="elements__image" src="./images/photo-karachaevsk.png" alt="фото Карачаево-Черкесии">
           <div class="elements__container">
             <h2 class="elements__text">Карачаево-Черкесия</h2>
             <button class="elements__like-button" aria-label="поставить лайк"></button>
@@ -75,19 +76,20 @@
     <p class="footer__author">&copy; 2020 Mesto Russia</p>
   </footer>
 
-<div class="popup">
-  <div class="popup__container">
-    <button id="close-button" type="button" class="popup__close-button"></button>
-    <p class="popup__text">Редактировать профиль</p>
-    <form name="profile" class="popup__form">
-      <input type="text" class="popup__input" id="input__name" placeholder="имя">
-      <input type="text" class="popup__input" id="input__about" placeholder="о себе">
-      <button type="submit" class="popup__button-save">
-        Сохранить
-      </button>
-    </form>
+  <div class="popup">
+    <div class="popup__container">
+      <button id="close-button" type="button" class="popup__close-button"></button>
+      <h2 class="popup__text">Редактировать профиль</h2>
+      <form name="profile" class="popup__form">
+        <input type="text" class="popup__input" id="input__name">
+        <input type="text" class="popup__input" id="input__about">
+        <button type="submit" class="popup__button-save">
+          Сохранить
+        </button>
+      </form>
+    </div>
   </div>
-</div>
   <script src="./scripts/index.js"></script>
 </body>
+
 </html>

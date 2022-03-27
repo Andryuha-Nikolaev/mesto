@@ -13,6 +13,7 @@
   font-size: 18px;
   line-height: 22px;
   text-align: center;
+  cursor: pointer;
 }
 
 .popup__button-save:hover {
@@ -24,5 +25,7 @@
     margin-top: 15px;
     max-width: 238px;
     height: 46px;
+    font-size: 14px;
+    line-height: 17px;
   }
 }
