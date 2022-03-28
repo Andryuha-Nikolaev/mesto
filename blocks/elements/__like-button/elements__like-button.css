@@ -7,10 +7,10 @@
   width: 22px;
   height: 19px;
   border: none;
+  cursor: pointer;
 }
 
 .elements__like-button:hover {
-  cursor: pointer;
   opacity: 0.6;
 }
 
