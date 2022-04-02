@@ -13,8 +13,3 @@
 .elements__like-button:hover {
   opacity: 0.6;
 }
-
-.elements__like-button:active {
-  background-image: url(../../../images/Union.png);
-  opacity: 1;
-}
