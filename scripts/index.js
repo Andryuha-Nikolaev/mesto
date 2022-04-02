@@ -19,7 +19,7 @@ const photosContainer = document.querySelector('.elements__list'); //подкл�
 
 const template = document.querySelector('#template-list-item');
 
-const imagePopupElement = document.querySelector('#popup-image'); //подкелючаем попап картинки
+const imagePopupElement = document.querySelector('.popup_view-image'); //подкелючаем попап картинки
 const imagePopupClose = imagePopupElement.querySelector('#image-close-button'); //подключаем кнопку закрытия попапа
 const imagePopupImage = imagePopupElement.querySelector('.popup__image'); //подключаем изображение попапа
 const imagePopupDescription = imagePopupElement.querySelector('.popup__description'); //подключаем описание картинки попапа
