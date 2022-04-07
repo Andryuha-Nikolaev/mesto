@@ -1,7 +1,7 @@
 .popup {
   visibility: hidden;
   opacity: 0;
-  transition: visibility .5s, opacity .5s linear;
+  transition: visibility .2s, opacity .2s linear;
   display: flex;
   position: fixed;
   z-index: 10;

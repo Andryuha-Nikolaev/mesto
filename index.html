@@ -38,9 +38,11 @@
     <div class="popup__container">
       <button id="edit-close-button" type="button" class="popup__close-button"></button>
       <h2 class="popup__text">Редактировать профиль</h2>
-      <form name="profile" class="popup__form" id="edit-form">
-        <input type="text" class="popup__input" id="input__name" placeholder="имя">
-        <input type="text" class="popup__input" id="input__about" placeholder="о себе">
+      <form name="profile" class="form" id="edit-form" novalidate>
+        <label class="form__field">
+          <input class="form__input" id="input__name" type="text" placeholder="имя" required minlength="2" maxlength="40">
+          <input class="form__input" id="input__about" type="text" placeholder="о себе" required minlength="2" maxlength="200">
+        </label>
         <button type="submit" class="popup__button-save" id="edit-button-save">
           Сохранить
         </button>
@@ -52,9 +54,11 @@
     <div class="popup__container">
       <button id="add-close-button" type="button" class="popup__close-button"></button>
       <h2 class="popup__text">Новое место</h2>
-      <form name="photo" class="popup__form" id="add-form">
-        <input type="text" class="popup__input"  id="photo-name" placeholder="Название">
-        <input type="url" class="popup__input"  id="photo-link" placeholder="Ссылка на картинку">
+      <form name="photo" class="form" id="add-form" novalidate>
+        <label class="form__field">
+          <input class="form__input" id="photo-name" type="text" placeholder="Название" required minlength="2" maxlength="30">
+          <input class="form__input" id="photo-link" type="url" placeholder="Ссылка на картинку" required>
+        </label>
         <button  type="submit" class="popup__button-save" id="add-button-save">
           Создать
         </button>
@@ -80,6 +84,8 @@
       </div>
     </li>
   </template>
+  <script src="./scripts/validate.js"></script>
+  <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/index.js"></script>
 </body>
 
