@@ -1,17 +1,16 @@
-.popup__text {
-  margin: 0;
+.form__text {
+  margin: 0 0 44px;
   padding: 0;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-  margin-bottom: 54px;
 }
 
-@media screen and (max-width: 767px) {
-  .popup__text {
+@media (max-width: 767px) {
+  .form__text {
+    margin: 0 0 65px;
     font-size: 18px;
     line-height: 22px;
-    margin-bottom: 75px;
   }
 }

@@ -1,4 +1,6 @@
 .form__field {
-  display: flex;
-  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  position: relative;
 }

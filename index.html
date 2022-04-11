@@ -37,13 +37,17 @@
   <div class="popup" id="popup-edit">
     <div class="popup__container">
       <button id="edit-close-button" type="button" class="popup__close-button"></button>
-      <h2 class="popup__text">Редактировать профиль</h2>
       <form name="profile" class="form" id="edit-form" novalidate>
+        <h2 class="form__text">Редактировать профиль</h2>
         <label class="form__field">
-          <input class="form__input" id="input__name" type="text" placeholder="имя" required minlength="2" maxlength="40">
-          <input class="form__input" id="input__about" type="text" placeholder="о себе" required minlength="2" maxlength="200">
+          <input class="form__input" id="name-input" type="text" placeholder="имя" required minlength="2" maxlength="40">
+          <span class="form__input-error name-input-error"></span>
         </label>
-        <button type="submit" class="popup__button-save" id="edit-button-save">
+        <label class="form__field">
+          <input class="form__input" id="about-input" type="text" placeholder="о себе" required minlength="2" maxlength="200">
+          <span class="form__input-error about-input-error"></span>
+        </label>
+        <button type="submit" class="form__button-save" id="edit-button-save">
           Сохранить
         </button>
       </form>
@@ -53,13 +57,17 @@
   <div class="popup" id="popup-add">
     <div class="popup__container">
       <button id="add-close-button" type="button" class="popup__close-button"></button>
-      <h2 class="popup__text">Новое место</h2>
       <form name="photo" class="form" id="add-form" novalidate>
+        <h2 class="form__text">Новое место</h2>
         <label class="form__field">
-          <input class="form__input" id="photo-name" type="text" placeholder="Название" required minlength="2" maxlength="30">
-          <input class="form__input" id="photo-link" type="url" placeholder="Ссылка на картинку" required>
+          <input class="form__input" id="photo-input" type="text" placeholder="Название" required minlength="2" maxlength="30">
+          <span class="form__input-error photo-input-error"></span>
         </label>
-        <button  type="submit" class="popup__button-save" id="add-button-save">
+        <label class="form__field">
+          <input class="form__input" id="link-input" type="url" placeholder="Ссылка на картинку" required>
+          <span class="form__input-error link-input-error"></span>
+        </label>
+        <button  type="submit" class="form__button-save" id="add-button-save">
           Создать
         </button>
       </form>
@@ -84,9 +92,9 @@
       </div>
     </li>
   </template>
-  <script src="./scripts/validate.js"></script>
   <script src="./scripts/initialCards.js"></script>
   <script src="./scripts/index.js"></script>
+  <script src="./scripts/validate.js"></script>
 </body>
 
 </html>

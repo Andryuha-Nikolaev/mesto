@@ -4,8 +4,8 @@ const closeButton = document.querySelector('.popup__close-button'); //общая
 const editPopupElement = document.querySelector('#popup-edit'); //попап редактирования профиля
 const editButton = document.querySelector('#edit-button'); //кнопка открытия попапа редактирования
 const editFormElement = document.querySelector('#edit-form'); //форма попапа редактирования профиля
-const nameInput = editFormElement.querySelector('#input__name'); //инпут имени
-const jobInput = editFormElement.querySelector('#input__about'); //инпут описания
+const nameInput = editFormElement.querySelector('#name-input'); //инпут имени
+const jobInput = editFormElement.querySelector('#about-input'); //инпут описания
 const editButtonSave = editFormElement.querySelector('#edit-button-save'); //кнопка сохранения попапа редактирования профиля
 const profileName = document.querySelector('.profile__name'); //имя профиля на странице
 const profileCaption = document.querySelector('.profile__caption'); //описание профиля на странице
@@ -13,8 +13,8 @@ const profileCaption = document.querySelector('.profile__caption'); //описа
 const addPopupElement = document.querySelector('#popup-add'); //попап добавления фото
 const addButton = document.querySelector('#add-button'); //кнопка открытия попапа добавления фото
 const addFormElement = document.querySelector('#add-form'); //форма попапа добавления фото
-const namePhoto = addFormElement.querySelector('#photo-name'); //инпут названия фото
-const linkPhoto = addFormElement.querySelector('#photo-link'); //инпут ссылки на фото
+const namePhoto = addFormElement.querySelector('#photo-input'); //инпут названия фото
+const linkPhoto = addFormElement.querySelector('#link-input'); //инпут ссылки на фото
 const addButtonSave = addFormElement.querySelector('#add-button-save'); //кнопка сохранения попапа добавления фото
 const photosContainer = document.querySelector('.elements__list'); //подключили список элементов
 
@@ -48,14 +48,12 @@ const closePopup = (popup) => {
 const openEditPopup = () => {
   nameInput.value = profileName.textContent;
   jobInput.value = profileCaption.textContent;
-  // validationPopupEdit.resetPopupForm();
   openPopup(editPopupElement);
 };
 
 //функция попапа добавления фото
 const openAddPopup = () => {
   addFormElement.reset();
-  // validationPopupAdd.resetPopupForm();
   openPopup(addPopupElement);
 };
 
@@ -105,7 +103,7 @@ const createPhoto = (photoCard) => {
   })
 
   //открытие попапа картинки по клику на изображение
-  card.querySelector('.elements__image').addEventListener('click', function() {
+  card.querySelector('.elements__image').addEventListener('click', function () {
     imagePopupImage.src = photoCard.link;
     imagePopupImage.alt = photoCard.name;
     imagePopupDescription.textContent = photoCard.name;
@@ -124,7 +122,7 @@ const renderPhoto = (photoCard) => {
 //функция добавляет фото
 const addPhoto = (event) => {
   event.preventDefault(); //запрещаем выполнение события по умолчанию, чтобы при отправе страница не перезагружалась
-  let photoCard = { }; //создаем объект
+  let photoCard = {}; //создаем объект
   photoCard.name = namePhoto.value; //присваиваем для name объекта значение из инпута name
   photoCard.link = linkPhoto.value; //присваиваем для link объекта значение из инпута link
   renderPhoto(photoCard); //вызов функции добавляет строку в elements__list
@@ -142,4 +140,3 @@ photosContainer.append(...elements);
 
 //вешаем обработчик события на форму добавления новой карточки. При нажатии на Создать, выполнятся функция addPhoto
 addFormElement.addEventListener('submit', addPhoto);
-
