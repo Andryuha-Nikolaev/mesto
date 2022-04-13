@@ -61,6 +61,10 @@ const openEditPopup = () => {
   jobInput.value = profileCaption.textContent;
   inputList = Array.from(formProfile.querySelectorAll(".form__input"));
   toggleButtonState(inputList, buttonSubmitProfile, config);
+
+  hideInputError(formProfile, nameInput, config);
+  hideInputError(formProfile, jobInput, config);
+
   openPopup(popupProfile);
 };
 
@@ -69,6 +73,10 @@ const openAddPopup = () => {
   formCard.reset();
   inputList = Array.from(formCard.querySelectorAll(".form__input"));
   toggleButtonState(inputList, buttobSubmitCard, config);
+
+  hideInputError(formCard, namePhoto, config);
+  hideInputError(formCard, linkPhoto, config);
+
   openPopup(popupCard);
 };
 
@@ -78,6 +86,7 @@ buttonEdit.addEventListener('click', openEditPopup);
 //кнопка открытия попапа добавления фото
 buttonAdd.addEventListener('click', openAddPopup);
 
+//функция закрытия попапов
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
     if (evt.target.classList.contains('popup_opened'))  {
