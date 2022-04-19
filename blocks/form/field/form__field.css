@@ -4,3 +4,9 @@
   margin-bottom: 35px;
   position: relative;
 }
+
+@media screen and (max-width: 767px) {
+  .profile {
+    margin-bottom: 50px;
+  }
+}
