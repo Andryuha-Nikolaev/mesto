@@ -105,7 +105,7 @@ formProfile.addEventListener('submit', handleProfileFormSubmit);
 
 
 const createCard = (data) => {//функция создания карточки
-  const card = new Card(data.name, data.link);// Создадим экземпляр карточки
+  const card = new Card(data.name, data.link, '#template-list-item');// Создадим экземпляр карточки
   const cardElement = card.generateCard();// Создаём карточку и возвращаем наружу
   return cardElement;
 };

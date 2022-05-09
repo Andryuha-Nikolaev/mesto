@@ -3,15 +3,16 @@ import { openPopup } from './index.js';
 export default class Card {
   // в конструкторе будут динамические данные,
   // для каждого экземпляра свои
-  constructor(name, link) {
+  constructor(name, link, cardSelector) {
     this._name = name;
     this._link = link;
+    this._cardSelector = cardSelector;
   }
 
   _getTemplate() {//Задача метода _getTemplate — вернуть разметку карточки через return
     // забираем разметку из HTML и клонируем элемент
     const cardElement = document
-      .querySelector('#template-list-item')
+      .querySelector(this._cardSelector)
       .content
       .querySelector('.elements__list-item')
       .cloneNode(true);
@@ -58,11 +59,12 @@ export default class Card {
     // Запишем разметку в приватное поле _element.
     // Так у других элементов появится доступ к ней.
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector('.elements__image');
 
     // Добавим данные
-    this._element.querySelector('.elements__image').src = this._link;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._element.querySelector('.elements__text').textContent = this._name;
-    this._element.querySelector('.elements__image').alt = this._name;
 
     this._setEventListeners();
     // Вернём элемент наружу
