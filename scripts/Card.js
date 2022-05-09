@@ -1,12 +1,17 @@
-import { openPopup } from './index.js';
+// import { openPopup } from './index.js';
 
 export default class Card {
   // в конструкторе будут динамические данные,
   // для каждого экземпляра свои
-  constructor(name, link, cardSelector) {
+  constructor(name, link, cardSelector, handleCardClick) {
     this._name = name;
     this._link = link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
+
+    this._element = this._getTemplate(); // Запишем разметку в приватное поле _element. Так у других элементов появится доступ к ней.
+    this._cardImage = this._element.querySelector('.elements__image');
+    this._cardText = this._element.querySelector('.elements__text');
   }
 
   _getTemplate() {//Задача метода _getTemplate — вернуть разметку карточки через return
@@ -30,41 +35,27 @@ export default class Card {
     this._element = null;
   }
 
-  _openImagePopup() {
-    const popupImage = document.querySelector('.popup_view-image'); //попап картинки
-    const imagePopupImage = popupImage.querySelector('.popup__image'); //изображение попапа картинки
-    const descriptionImagePopup = popupImage.querySelector('.popup__description'); //описание картинки попапа
-    imagePopupImage.src = this._link;
-    imagePopupImage.alt = this._name;
-    descriptionImagePopup.textContent = this._name;
-    openPopup(popupImage);
-  }
-
   _setEventListeners() {
     this._like = this._element.querySelector('.elements__like-button');
     this._like.addEventListener('click', () => {
       this._toggleLike();
     });
+
     this._delete = this._element.querySelector('.elements__delete-button');
     this._delete.addEventListener('click', () => {
       this._deleteCard();
     });
-    this._image = this._element.querySelector('.elements__image');
-    this._image.addEventListener('click', () => {
-      this._openImagePopup();
+
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._name, this._link)
     });
   }
 
   generateCard() {
-    // Запишем разметку в приватное поле _element.
-    // Так у других элементов появится доступ к ней.
-    this._element = this._getTemplate();
-    this._cardImage = this._element.querySelector('.elements__image');
-
     // Добавим данные
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._element.querySelector('.elements__text').textContent = this._name;
+    this._cardText.textContent = this._name;
 
     this._setEventListeners();
     // Вернём элемент наружу

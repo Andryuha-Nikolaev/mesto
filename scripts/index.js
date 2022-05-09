@@ -18,6 +18,10 @@ const namePhoto = formCard.querySelector('#photo-input'); //инпут назв�
 const linkPhoto = formCard.querySelector('#link-input'); //инпут ссылки на фото
 const photosContainer = document.querySelector('.elements__list'); //подключили список элементов
 
+const popupImage = document.querySelector('.popup_view-image'); //попап картинки
+const imagePopupImage = popupImage.querySelector('.popup__image'); //изображение попапа картинки
+const descriptionImagePopup = popupImage.querySelector('.popup__description'); //описание картинки попапа
+
 
 
 const validationSettings = {
@@ -102,10 +106,15 @@ function handleProfileFormSubmit(evt) {
 //обработчик изменяет данные профиля по нажатию кнопки сохранить
 formProfile.addEventListener('submit', handleProfileFormSubmit);
 
-
+function handleCardClick(name, link) {
+  imagePopupImage.src = link; //устанавливаем ссылку
+  imagePopupImage.alt = name;
+  descriptionImagePopup.textContent = name; //устанавливаем подпись картинке
+  openPopup(popupImage);//открываем попап универсальной функцией, которая навешивает обработчик Escape внутри себя
+}
 
 const createCard = (data) => {//функция создания карточки
-  const card = new Card(data.name, data.link, '#template-list-item');// Создадим экземпляр карточки
+  const card = new Card(data.name, data.link, '#template-list-item', handleCardClick);// Создадим экземпляр карточки
   const cardElement = card.generateCard();// Создаём карточку и возвращаем наружу
   return cardElement;
 };
@@ -133,5 +142,3 @@ const addPhoto = (event) => {
 
 //вешаем обработчик события на форму добавления новой карточки. При нажатии на Создать, выполнятся функция addPhoto
 formCard.addEventListener('submit', addPhoto);
-
-export { openPopup };
