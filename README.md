@@ -6,7 +6,7 @@
 
 **Ссылка на сайт**
 
-* (https://andryuha-nikolaev.github.io/mesto/)
+* [Место](https://andryuha-nikolaev.github.io/mesto/)
 
 **Макет**
 
@@ -23,3 +23,5 @@
 * Nested БЭМ
 * JavaScript
 * Git
+* ООП
+
