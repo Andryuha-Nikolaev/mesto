@@ -24,4 +24,5 @@
 * JavaScript
 * Git
 * ООП
+* Webpack
 
