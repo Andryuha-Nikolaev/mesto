@@ -40,11 +40,11 @@
       <form name="profile" class="form" id="edit-form" novalidate>
         <h2 class="form__text">Редактировать профиль</h2>
         <label class="form__field">
-          <input class="form__input" id="name-input" type="text" placeholder="имя" required minlength="2" maxlength="40">
+          <input name="name" class="form__input" id="name-input" type="text" placeholder="имя" required minlength="2" maxlength="40">
           <span class="form__input-error name-input-error"></span>
         </label>
         <label class="form__field">
-          <input class="form__input" id="about-input" type="text" placeholder="о себе" required minlength="2" maxlength="200">
+          <input name="about" class="form__input" id="about-input" type="text" placeholder="о себе" required minlength="2" maxlength="200">
           <span class="form__input-error about-input-error"></span>
         </label>
         <button type="submit" class="form__button-save" id="edit-button-save">
@@ -93,8 +93,7 @@
     </li>
   </template>
 
-  <script src="./scripts/initialCards.js"></script>
-  <script type="module" src="./scripts/index.js"></script>
+  <script type="module" src="./pages/index.js"></script>
 
 </body>
 
