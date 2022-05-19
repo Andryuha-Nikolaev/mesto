@@ -14,8 +14,6 @@ import {
   aboutInput,
   buttonAdd,
   formCard,
-  namePhoto,
-  linkPhoto,
   validationSettings
 } from "../utils/constants.js";
 
@@ -34,9 +32,7 @@ buttonAdd.addEventListener('click', () => {
 //экземпляр класса для попапа добавления фото
 const popupWithFormAdd = new PopupWithForm(
   {
-    formSubmit: (data) => {
-      data.link = linkPhoto.value; //присваиваем для link объекта значение из инпута name
-      data.name = namePhoto.value; //присваиваем для name объекта значение из инпута link
+    submitForm: (data) => {
       const cardPopup = createCard(data);
       cardsList.addItem(cardPopup);
       popupWithFormAdd.close();
@@ -88,7 +84,7 @@ buttonEdit.addEventListener('click', () => {
 //экземпляр класса для попапа профиля
 const popupWithFormEdit = new PopupWithForm(
   {
-    formSubmit: (data) => {
+    submitForm: (data) => {
       userInfo.setUserInfo(data);
       popupWithFormEdit.close();
     }

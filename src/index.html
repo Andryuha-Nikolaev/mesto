@@ -59,11 +59,11 @@
       <form name="photo" class="form" id="add-form" novalidate>
         <h2 class="form__text">Новое место</h2>
         <label class="form__field">
-          <input class="form__input" id="photo-input" type="text" placeholder="Название" required minlength="2" maxlength="30">
+          <input name="name" class="form__input" id="photo-input" type="text" placeholder="Название" required minlength="2" maxlength="30">
           <span class="form__input-error photo-input-error"></span>
         </label>
         <label class="form__field">
-          <input class="form__input" id="link-input" type="url" placeholder="Ссылка на картинку" required>
+          <input name="link" class="form__input" id="link-input" type="url" placeholder="Ссылка на картинку" required>
           <span class="form__input-error link-input-error"></span>
         </label>
         <button  type="submit" class="form__button-save" id="add-button-save">

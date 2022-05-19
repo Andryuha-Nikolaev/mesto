@@ -1,25 +1,25 @@
 export default class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   //функция открытия попапа
 open() {
   this._popup.classList.add('popup_opened'); //добавляем класс открытого попапа
-  document.addEventListener('keyup', this._handleEscClose); //ставим слушатель на нажатие esc
+  document.addEventListener('keydown', this._handleEscClose); //ставим слушатель на нажатие esc
 };
 
 //функция закрытия попапа
 close() {
   this._popup.classList.remove('popup_opened'); //убираем класс открытого попапа
-  document.removeEventListener('keyup', this._handleEscClose); //убираем слушатель на нажатие esc
+  document.removeEventListener('keydown', this._handleEscClose); //убираем слушатель на нажатие esc
 };
 
 //функция закрытия попапов на esc
 _handleEscClose(evt) {
   if (evt.key === 'Escape') { //если действие происходит на кнопке esc
-    const popup = document.querySelector('.popup_opened');
-    close(popup); //то вызвать функцию закрытия попапа
+    this.close(); //то вызвать функцию закрытия попапа
   }
 };
 

@@ -33,8 +33,6 @@ export const aboutInput = formProfile.querySelector('#about-input'); //инпу�
 
 export const buttonAdd = document.querySelector('#add-button'); //кнопка открытия попапа добавления фото
 export const formCard = document.querySelector('#add-form'); //форма попапа добавления фото
-export const namePhoto = formCard.querySelector('#photo-input'); //инпут названия фото
-export const linkPhoto = formCard.querySelector('#link-input'); //инпут ссылки на фото
 
 //объект с настройками валидации
 export const validationSettings = {
