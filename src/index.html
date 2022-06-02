@@ -14,7 +14,10 @@
 
   <main class="content">
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/photo-avatar.png')%>" alt="Аватар">
+      <div class="profile__avatar-container">
+        <img class="profile__avatar" src="<%=require('./images/photo-avatar.png')%>" alt="Аватар">
+        <button type="button" class="profile__avatar-button" id="avatar-button" aria-label="изменить аватар"></button>
+      </div>
       <div class="profile__info">
         <h1 class="profile__name"></h1>
         <p class="profile__caption"></p>
@@ -39,11 +42,13 @@
       <form name="profile" class="form" id="edit-form" novalidate>
         <h2 class="form__text">Редактировать профиль</h2>
         <label class="form__field">
-          <input name="name" class="form__input" id="name-input" type="text" placeholder="имя" required minlength="2" maxlength="40">
+          <input name="name" class="form__input" id="name-input" type="text" placeholder="имя" required minlength="2"
+            maxlength="40">
           <span class="form__input-error name-input-error"></span>
         </label>
         <label class="form__field">
-          <input name="about" class="form__input" id="about-input" type="text" placeholder="о себе" required minlength="2" maxlength="200">
+          <input name="about" class="form__input" id="about-input" type="text" placeholder="о себе" required
+            minlength="2" maxlength="200">
           <span class="form__input-error about-input-error"></span>
         </label>
         <button type="submit" class="form__button-save" id="edit-button-save">
@@ -59,14 +64,15 @@
       <form name="photo" class="form" id="add-form" novalidate>
         <h2 class="form__text">Новое место</h2>
         <label class="form__field">
-          <input name="name" class="form__input" id="photo-input" type="text" placeholder="Название" required minlength="2" maxlength="30">
+          <input name="name" class="form__input" id="photo-input" type="text" placeholder="Название" required
+            minlength="2" maxlength="30">
           <span class="form__input-error photo-input-error"></span>
         </label>
         <label class="form__field">
           <input name="link" class="form__input" id="link-input" type="url" placeholder="Ссылка на картинку" required>
           <span class="form__input-error link-input-error"></span>
         </label>
-        <button  type="submit" class="form__button-save" id="add-button-save">
+        <button type="submit" class="form__button-save" id="add-button-save">
           Создать
         </button>
       </form>
@@ -81,13 +87,44 @@
     </div>
   </div>
 
+  <div class="popup" id="popup-confirm">
+    <div class="popup__container">
+      <button id="edit-close-button" type="button" class="popup__close-button"></button>
+      <form name="confirm" class="form" id="confirm-form" novalidate>
+        <h2 class="form__text form__text-confirm">Вы уверены?</h2>
+        <button type="submit" class="form__button-save" id="confirm-button">
+          Да
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup" id="popup-avatar">
+    <div class="popup__container">
+      <button id="avatar-close-button" type="button" class="popup__close-button"></button>
+      <form name="avatar" class="form" id="avatar-form" novalidate>
+        <h2 class="form__text">Обновить аватар</h2>
+        <label class="form__field">
+          <input name="link" class="form__input" id="link-input" type="url" placeholder="Ссылка на аватар" required>
+          <span class="form__input-error link-input-error"></span>
+        </label>
+        <button type="submit" class="form__button-save" id="avatar-button-save">
+          Сохранить
+        </button>
+      </form>
+    </div>
+  </div>
+
   <template id="template-list-item">
     <li class="elements__list-item">
       <img class="elements__image" alt="#" src="#">
       <button type="button" class="elements__delete-button" aria-label="удалить карточку"></button>
       <div class="elements__container">
         <h2 class="elements__text"></h2>
-        <button type="button" class="elements__like-button" aria-label="поставить лайк"></button>
+        <div class="elements__like-container">
+          <button type="button" class="elements__like-button" aria-label="поставить лайк"></button>
+          <span class="elements__like-counter">0</span>
+        </div>
       </div>
     </li>
   </template>

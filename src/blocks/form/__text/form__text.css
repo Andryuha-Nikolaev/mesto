@@ -1,6 +1,7 @@
 .form__text {
-  margin: 0 0 44px;
+  margin: 0;
   padding: 0;
+  margin-bottom: 44px;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
@@ -9,8 +10,12 @@
 
 @media (max-width: 767px) {
   .form__text {
-    margin: 0 0 65px;
+    margin-bottom: 65px;
     font-size: 18px;
     line-height: 22px;
   }
+}
+
+.form__text-confirm {
+  margin-bottom: 15px;
 }

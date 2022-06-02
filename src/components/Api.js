@@ -40,6 +40,17 @@ export default class Api {
     }).then(this._handleOriginalResponse)
   }
 
+  //метод добавления новой карточки на сервер
+  postCard(data) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',//метод запроса
+      headers: this._headers,//заголовки запроса
+      body: JSON.stringify({//тело запроса
+        name: data.name,//в name передаем значение name объекта, переданного в setUserInfo
+        link: data.link//в about передаем значение about объекта, переданного в setUserInfo
+      })
+    }).then(this._handleOriginalResponse)
+  }
 
   // setUserAvatar(data) {
   //   return fetch(`${this._url}/users/me/avatar`, {
