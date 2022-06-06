@@ -6,6 +6,9 @@ export const aboutInput = formProfile.querySelector('#about-input'); //инпу�
 export const buttonAdd = document.querySelector('#add-button'); //кнопка открытия попапа добавления фото
 export const formCard = document.querySelector('#add-form'); //форма попапа добавления фото
 
+export const buttonAvatar = document.querySelector('#avatar-button'); //кнопка открытия попапа изменения аватара
+export const formAvatar = document.querySelector('#avatar-form');
+
 //объект с настройками валидации
 export const validationSettings = {
   inputSelector: '.form__input',

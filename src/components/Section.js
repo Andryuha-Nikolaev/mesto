@@ -9,9 +9,7 @@ export default class Section {
   //перебирает массив данных _initialArray. Вызывает для каждого элемента функцию переданную в renderer
   renderItems(data) {
     // Переберем массив _initialArray с начальными карточками
-    data.forEach(item => {
-      this._renderer(item);
-    })
+    data.forEach(item => this._renderer(item));
   }
 
   //принимает параметр element и вставляет его в контейнер методом append

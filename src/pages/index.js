@@ -6,9 +6,12 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithConfirm from '../components/PopupWithConfirm';
 import {
   buttonEdit,
   formProfile,
+  buttonAvatar,
+  formAvatar,
   nameInput,
   aboutInput,
   buttonAdd,
@@ -31,36 +34,37 @@ const api = new Api({
 });
 
 
-api.getUserInfo()
-  .then((profileInfo) => {
+//функция делает запрос серверу и получает данные профиля
+// api.getUserInfo()
+//   .then((profileInfo) => {//берет данные из полученного с сервера объекта с данными(условно profileInfo)
 
-    ownerId = profileInfo._id;
-    userInfo.setUserInfo(profileInfo);
-  })
-  .catch((err) => {
-    console.log(`Ошибка: ${err}`);
-  });
-
-
-api.getCards()
-  .then((data) => {
-    cardsList.renderItems(data);
-  })
-  .catch((err) => {
-    console.log(`Ошибка: ${err}`);
-  });
-
-// Загрузка готовых карточек и данных о пользователе с сервера
-// Promise.all([api.getUserInfo()])
-//   .then((data) => {
-//     const [profileInfo, cardsData] = data;
-//     ownerId = profileInfo._id;
-//     userInfo.setUserInfo(profileInfo);
-//     cardsList.renderCards(cardsData);
+//     ownerId = profileInfo._id;//ownerId это значение _id полученного обекта
+//     userInfo.setUserInfo(profileInfo);//вызов метода setUserInfo экземпляра класса userInfo (класс UserInfo)
+//     //метод берет полученный обект, берет из него значения name и about, и записывает их в разметку по переданным селекторам в параметры экземпляра класса userInfo
 //   })
 //   .catch((err) => {
 //     console.log(`Ошибка: ${err}`);
 //   });
+
+
+// api.getCards()
+//   .then((data) => {
+//     cardsList.renderItems(data);
+//   })
+//   .catch((err) => {
+//     console.log(`Ошибка: ${err}`);
+//   });
+
+// Загрузка готовых карточек и данных о пользователе с сервера
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([profileInfo, cardsData]) => {
+    ownerId = profileInfo._id;// айди пользователя
+    userInfo.setUserInfo(profileInfo);
+    cardsList.renderItems(cardsData);
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+  });
 
 
 
@@ -71,6 +75,9 @@ validationPopupProfile.enableValidation(); //вызываем enableValidation �
 
 const validationPopupCard = new FormValidator(validationSettings, formCard); //создаем экземпляр валидации для формы добавления карточки
 validationPopupCard.enableValidation(); //вызываем enableValidation для формы картинки
+
+const validationPopupAvatar = new FormValidator(validationSettings, formAvatar); //создаем экземпляр валидации для формы добавления карточки
+validationPopupAvatar.enableValidation(); //вызываем enableValidation для формы картинки
 
 //кнопка открытия попапа добавления фото
 buttonAdd.addEventListener('click', () => {
@@ -94,10 +101,10 @@ const popupWithFormAdd = new PopupWithForm(
         })
         .finally(() => {
           // popupWithFormEdit.renderLoading(false);
-          popupWithFormEdit.close();
+          popupWithFormAdd.close();
         })
 
-      popupWithFormAdd.close();
+      // popupWithFormAdd.close();
     }
   }, '#popup-add');
 popupWithFormAdd.setEventListeners();
@@ -105,9 +112,22 @@ popupWithFormAdd.setEventListeners();
 //функция создания карточки
 const createCard = function createCard(data) {
   const card = new Card({
-    data, handleCardClick: (name, link) => {
+    data, ownerId, handleCardClick: (name, link) => {
       popupViewImage.open(name, link);
-    }
+    },
+    handleDelIconClick: (cardId) => {
+      popupWithConfirm.open();
+      popupWithConfirm.submitCallback(() => {
+        api.deleteCard(cardId)
+          .then(() => {
+            popupWithConfirm.close();
+            card.deleteCard();
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          });
+      });
+    },
   }, '#template-list-item'); //создадим экземпляр карточки
   const cardElement = card.generateCard(); //создадим карточку и возвращаем наружу
   return cardElement; //вернем карточку
@@ -126,15 +146,18 @@ const cardsList = new Section({
 const popupViewImage = new PopupWithImage('.popup_view-image'); //экзепляр класса для открытия попапа увеличения картинки
 popupViewImage.setEventListeners(); //подключаем слушатели
 
+const popupWithConfirm = new PopupWithConfirm('#popup-confirm');
+popupWithConfirm.setEventListeners();
 
 
-const userInfo = new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__caption' });
+
+const userInfo = new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__caption', avatarSelector: '.profile__avatar' });
 
 //слушатель открытия попапа редактирования профиля
 buttonEdit.addEventListener('click', () => {
-  const profileInfo = userInfo.getUserInfo();
-  nameInput.value = profileInfo.name;//при открытии попапа значение инпута имени равно имени профиля
-  aboutInput.value = profileInfo.about;//при открытии попапа значение инпута о себе равно о себе профиля
+  const profileInfo = userInfo.getUserInfo();//профиль инфо - объект, содержащий имя и описание профиля, записанные в разметку страницы
+  nameInput.value = profileInfo.name;//при открытии попапа значение инпута имени равно имени профиля, берется из значения name объекта профиль инфо
+  aboutInput.value = profileInfo.about;//при открытии попапа значение инпута о себе равно о себе профиля, берется из значения name объекта профиль инфо
   validationPopupProfile.resetPopupForm(); //сбасываем ошибки валидации и проверяем на валидность поля
   popupWithFormEdit.open();
 });
@@ -159,3 +182,29 @@ const popupWithFormEdit = new PopupWithForm(
     }
   }, '#popup-edit');
 popupWithFormEdit.setEventListeners();
+
+//слушатель открытия попапа изменения аватара
+buttonAvatar.addEventListener('click', () => {
+  // validationPopupAvatar.resetPopupForm();
+  popupWithFormAvatar.open();
+});
+
+//экземпляр класса попапа изменения аватара
+const popupWithFormAvatar = new PopupWithForm(
+  {
+    submitForm: (data) => {
+      // popupWithFormEdit.renderLoading(true, 'Загрузка...');
+      api.setUserAvatar(data)
+        .then((res) => {
+          userInfo.setUserInfo(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          // popupWithFormEdit.renderLoading(false);
+          popupWithFormAvatar.close();
+        })
+    }
+  }, '#popup-avatar');
+  popupWithFormAvatar.setEventListeners();
