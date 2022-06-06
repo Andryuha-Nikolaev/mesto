@@ -23,7 +23,7 @@ import Api from '../components/Api';
 
 
 
-let ownerId;
+let userId;
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-42',
@@ -58,7 +58,7 @@ const api = new Api({
 // Загрузка готовых карточек и данных о пользователе с сервера
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([profileInfo, cardsData]) => {
-    ownerId = profileInfo._id;// айди пользователя
+    userId = profileInfo._id;// айди пользователя
     userInfo.setUserInfo(profileInfo);
     cardsList.renderItems(cardsData);
   })
@@ -89,9 +89,7 @@ buttonAdd.addEventListener('click', () => {
 const popupWithFormAdd = new PopupWithForm(
   {
     submitForm: (data) => {
-      // const cardPopup = createCard(data);
-      // cardsList.addItem(cardPopup);
-
+      popupWithFormAdd.loading(true);
       api.postCard(data)
         .then((res) => {
           cardsList.addItem(createCard(res), 'prepend');
@@ -100,19 +98,19 @@ const popupWithFormAdd = new PopupWithForm(
           console.log(err);
         })
         .finally(() => {
-          // popupWithFormEdit.renderLoading(false);
+          popupWithFormAdd.loading(false);
           popupWithFormAdd.close();
         })
-
-      // popupWithFormAdd.close();
     }
   }, '#popup-add');
 popupWithFormAdd.setEventListeners();
 
 //функция создания карточки
-const createCard = function createCard(data) {
+const createCard = (data) => {
   const card = new Card({
-    data, ownerId, handleCardClick: (name, link) => {
+    data: data,
+    userId: userId,
+    handleCardClick: (name, link) => {
       popupViewImage.open(name, link);
     },
     handleDelIconClick: (cardId) => {
@@ -127,6 +125,24 @@ const createCard = function createCard(data) {
             console.log(`Ошибка: ${err}`);
           });
       });
+    },
+    handleSetLike: (cardId) => {
+      api.setLike(cardId)
+        .then((data) => {
+          card.handleLikeCard(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
+    },
+    handleDeleteLike: (cardId) => {
+      api.deleteLike(cardId)
+        .then((data) => {
+          card.handleLikeCard(data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        });
     },
   }, '#template-list-item'); //создадим экземпляр карточки
   const cardElement = card.generateCard(); //создадим карточку и возвращаем наружу
@@ -167,7 +183,7 @@ buttonEdit.addEventListener('click', () => {
 const popupWithFormEdit = new PopupWithForm(
   {
     submitForm: (data) => {
-      // popupWithFormEdit.renderLoading(true, 'Загрузка...');
+      popupWithFormEdit.loading(true);
       api.setUserInfo(data)
         .then((res) => {
           userInfo.setUserInfo(res);
@@ -176,7 +192,7 @@ const popupWithFormEdit = new PopupWithForm(
           console.log(err);
         })
         .finally(() => {
-          // popupWithFormEdit.renderLoading(false);
+          popupWithFormEdit.loading(false);
           popupWithFormEdit.close();
         })
     }
@@ -193,7 +209,7 @@ buttonAvatar.addEventListener('click', () => {
 const popupWithFormAvatar = new PopupWithForm(
   {
     submitForm: (data) => {
-      // popupWithFormEdit.renderLoading(true, 'Загрузка...');
+      popupWithFormAvatar.loading(true);
       api.setUserAvatar(data)
         .then((res) => {
           userInfo.setUserInfo(res);
@@ -202,7 +218,7 @@ const popupWithFormAvatar = new PopupWithForm(
           console.log(err);
         })
         .finally(() => {
-          // popupWithFormEdit.renderLoading(false);
+          popupWithFormAvatar.loading(false);
           popupWithFormAvatar.close();
         })
     }

@@ -70,4 +70,23 @@ export default class Api {
       headers: this._headers,//заголовки запроса
     }).then(this._handleOriginalResponse)
   }
+
+
+  //
+  setLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+    .then(this._handleOriginalResponse)
+  }
+
+  deleteLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(this._handleOriginalResponse)
+  }
+
 }
