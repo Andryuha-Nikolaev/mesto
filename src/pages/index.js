@@ -76,13 +76,13 @@ const popupWithFormAdd = new PopupWithForm(
       api.postCard(data)
         .then((res) => {
           cardsList.addItem(createCard(res), 'prepend');
+          popupWithFormAdd.close();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
           popupWithFormAdd.loading(false);
-          popupWithFormAdd.close();
         })
     }
   }, '#popup-add');
@@ -130,8 +130,7 @@ const createCard = (data) => {
         });
     },
   }, '#template-list-item'); // создадим экземпляр карточки
-  const cardElement = card.generateCard(); // создадим карточку и возвращаем наружу
-  return cardElement; // вернем карточку
+  return card.generateCard(); // создадим карточку и возвращаем наружу
 };
 
 // создаем экземпляр класса Section, который отвечает за отрисовку элементов на странице
@@ -175,13 +174,13 @@ const popupWithFormEdit = new PopupWithForm(
       api.setUserInfo(data)
         .then((res) => {
           userInfo.setUserInfo(res);
+          popupWithFormEdit.close();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
           popupWithFormEdit.loading(false);
-          popupWithFormEdit.close();
         })
     }
   }, '#popup-edit');
@@ -201,13 +200,13 @@ const popupWithFormAvatar = new PopupWithForm(
       api.setUserAvatar(data)
         .then((res) => {
           userInfo.setUserInfo(res);
+          popupWithFormAvatar.close();
         })
         .catch((err) => {
           console.log(err);
         })
         .finally(() => {
           popupWithFormAvatar.loading(false);
-          popupWithFormAvatar.close();
         })
     }
   }, '#popup-avatar');
