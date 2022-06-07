@@ -34,10 +34,10 @@ export default class PopupWithForm extends Popup {
   loading(isLoading, downloadMessage = 'Cохранение...') {
     if (isLoading) {
       this._submitButton.textContent = downloadMessage;
-      this._submitButton.classList.add('form__button-save_inactive');
+      this._submitButton.classList.add('form__button-save_loading');
     } else {
       this._submitButton.textContent = this._submitButtonText;
-    }
+      this._submitButton.classList.remove('form__button-save_loading');
   }
 }
-
+}

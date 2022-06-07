@@ -3,15 +3,15 @@ import Popup from "./Popup.js";
 export default class PopupWithConfirm extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-    // this._submitForm = submitForm;
 
     this._form = this._popup.querySelector('.form');
+    this._submitButton = this._form.querySelector('.form__button-save');
   }
 
   //метод в который в экземпляре класса Card будет записываться функция, срабатывающая при сабмите
   //попапа подтверждения
-  submitCallback(removing) {
-    this._handleSubmit = removing;
+  submitCallback(del) {
+    this._handleSubmit = del;
   }
 
   //слушатель сабмита формы

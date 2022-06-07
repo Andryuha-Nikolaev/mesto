@@ -23,6 +23,8 @@ import Api from '../components/Api';
 
 
 
+//_________API__________
+
 let userId;
 
 const api = new Api({
@@ -33,32 +35,10 @@ const api = new Api({
   }
 });
 
-
-//функция делает запрос серверу и получает данные профиля
-// api.getUserInfo()
-//   .then((profileInfo) => {//берет данные из полученного с сервера объекта с данными(условно profileInfo)
-
-//     ownerId = profileInfo._id;//ownerId это значение _id полученного обекта
-//     userInfo.setUserInfo(profileInfo);//вызов метода setUserInfo экземпляра класса userInfo (класс UserInfo)
-//     //метод берет полученный обект, берет из него значения name и about, и записывает их в разметку по переданным селекторам в параметры экземпляра класса userInfo
-//   })
-//   .catch((err) => {
-//     console.log(`Ошибка: ${err}`);
-//   });
-
-
-// api.getCards()
-//   .then((data) => {
-//     cardsList.renderItems(data);
-//   })
-//   .catch((err) => {
-//     console.log(`Ошибка: ${err}`);
-//   });
-
-// Загрузка готовых карточек и данных о пользователе с сервера
+// получение готовых карточек и данных о пользователе с сервера, после чего отрисовывается вся страница
 Promise.all([api.getUserInfo(), api.getCards()])
   .then(([profileInfo, cardsData]) => {
-    userId = profileInfo._id;// айди пользователя
+    userId = profileInfo._id;// id пользователя
     userInfo.setUserInfo(profileInfo);
     cardsList.renderItems(cardsData);
   })
@@ -68,24 +48,27 @@ Promise.all([api.getUserInfo(), api.getCards()])
 
 
 
-
+//_________Валидация__________
 
 const validationPopupProfile = new FormValidator(validationSettings, formProfile); //создаем экземпляр валидации для формы редактирования профиля
-validationPopupProfile.enableValidation(); //вызываем enableValidation для формы профиля
-
+const validationPopupAvatar = new FormValidator(validationSettings, formAvatar); //создаем экземпляр валидации для формы аватара
 const validationPopupCard = new FormValidator(validationSettings, formCard); //создаем экземпляр валидации для формы добавления карточки
+
+validationPopupProfile.enableValidation(); //вызываем enableValidation для формы профиля
+validationPopupAvatar.enableValidation(); //вызываем enableValidation для формы аватара
 validationPopupCard.enableValidation(); //вызываем enableValidation для формы картинки
 
-const validationPopupAvatar = new FormValidator(validationSettings, formAvatar); //создаем экземпляр валидации для формы добавления карточки
-validationPopupAvatar.enableValidation(); //вызываем enableValidation для формы картинки
 
-//кнопка открытия попапа добавления фото
+
+//_________Создание карточек__________
+
+// кнопка открытия попапа добавления фото
 buttonAdd.addEventListener('click', () => {
   validationPopupCard.resetPopupForm(); //сбасываем ошибки валидации и проверяем на валидность поля
   popupWithFormAdd.open();
 });
 
-//экземпляр класса для попапа добавления фото
+// экземпляр класса для попапа добавления фото
 const popupWithFormAdd = new PopupWithForm(
   {
     submitForm: (data) => {
@@ -105,7 +88,7 @@ const popupWithFormAdd = new PopupWithForm(
   }, '#popup-add');
 popupWithFormAdd.setEventListeners();
 
-//функция создания карточки
+// функция создания карточки
 const createCard = (data) => {
   const card = new Card({
     data: data,
@@ -113,6 +96,7 @@ const createCard = (data) => {
     handleCardClick: (name, link) => {
       popupViewImage.open(name, link);
     },
+
     handleDelIconClick: (cardId) => {
       popupWithConfirm.open();
       popupWithConfirm.submitCallback(() => {
@@ -126,6 +110,7 @@ const createCard = (data) => {
           });
       });
     },
+
     handleSetLike: (cardId) => {
       api.setLike(cardId)
         .then((data) => {
@@ -144,32 +129,36 @@ const createCard = (data) => {
           console.log(`Ошибка: ${err}`);
         });
     },
-  }, '#template-list-item'); //создадим экземпляр карточки
-  const cardElement = card.generateCard(); //создадим карточку и возвращаем наружу
-  return cardElement; //вернем карточку
+  }, '#template-list-item'); // создадим экземпляр карточки
+  const cardElement = card.generateCard(); // создадим карточку и возвращаем наружу
+  return cardElement; // вернем карточку
 };
 
-//создаем экземпляр класса Section, который отвечает за отрисовку элементов на странице
+// создаем экземпляр класса Section, который отвечает за отрисовку элементов на странице
 const cardsList = new Section({
-  renderer: (item) => {//передаем функцию
+  renderer: (item) => {// передаем функцию
     const cardArray = createCard(item);
-    cardsList.addItem(cardArray, 'append');//вставляем элемент в разметку с помощью функции addItem из класса Section
+    cardsList.addItem(cardArray, 'append');// вставляем элемент в разметку с помощью функции addItem из класса Section
   }
 },
   '.elements__list');
 
+// экзепляр класса для открытия попапа увеличения картинки
+const popupViewImage = new PopupWithImage('.popup_view-image');
+popupViewImage.setEventListeners();// вызываем слушатели
 
-const popupViewImage = new PopupWithImage('.popup_view-image'); //экзепляр класса для открытия попапа увеличения картинки
-popupViewImage.setEventListeners(); //подключаем слушатели
-
+// экзепляр класса подтверждения удаления карточки
 const popupWithConfirm = new PopupWithConfirm('#popup-confirm');
-popupWithConfirm.setEventListeners();
+popupWithConfirm.setEventListeners();// вызываем слушатели
 
 
 
+//_________Информация профиля__________
+
+// экзепляр класса информации о пользователе
 const userInfo = new UserInfo({ nameSelector: '.profile__name', aboutSelector: '.profile__caption', avatarSelector: '.profile__avatar' });
 
-//слушатель открытия попапа редактирования профиля
+// кнопка открытия попапа редактирования профиля
 buttonEdit.addEventListener('click', () => {
   const profileInfo = userInfo.getUserInfo();//профиль инфо - объект, содержащий имя и описание профиля, записанные в разметку страницы
   nameInput.value = profileInfo.name;//при открытии попапа значение инпута имени равно имени профиля, берется из значения name объекта профиль инфо
@@ -178,8 +167,7 @@ buttonEdit.addEventListener('click', () => {
   popupWithFormEdit.open();
 });
 
-
-//экземпляр класса для попапа редактирования профиля
+// экземпляр класса для попапа редактирования профиля
 const popupWithFormEdit = new PopupWithForm(
   {
     submitForm: (data) => {
@@ -199,13 +187,13 @@ const popupWithFormEdit = new PopupWithForm(
   }, '#popup-edit');
 popupWithFormEdit.setEventListeners();
 
-//слушатель открытия попапа изменения аватара
+// кнопка открытия попапа изменения аватара
 buttonAvatar.addEventListener('click', () => {
-  // validationPopupAvatar.resetPopupForm();
+  validationPopupAvatar.resetPopupForm();
   popupWithFormAvatar.open();
 });
 
-//экземпляр класса попапа изменения аватара
+// экземпляр класса попапа изменения аватара
 const popupWithFormAvatar = new PopupWithForm(
   {
     submitForm: (data) => {
@@ -223,4 +211,4 @@ const popupWithFormAvatar = new PopupWithForm(
         })
     }
   }, '#popup-avatar');
-  popupWithFormAvatar.setEventListeners();
+popupWithFormAvatar.setEventListeners();

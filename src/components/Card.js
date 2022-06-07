@@ -74,9 +74,7 @@ export default class Card {
     this._cardText.textContent = this._name;
 
     this._handleDeleteButton();//при создании карточки с сервера проверяется совпадает ли айди пользователя с айди создателя карточки
-
     this._likesCounter.textContent = this._likes.length;//счетчик количества лайков, берет длину массива лайков и добавляет в разметку
-
     this._checkLikedState();
 
     this._setEventListeners();
@@ -84,7 +82,7 @@ export default class Card {
     return this._element;
   }
 
-  // поставить/удалить лайк, изменение количества лайков
+  // изменение количества лайков, установка и удаление лайка на странице
   handleLikeCard(data) {
     this._likes = data.likes;
     this._likesCounter.textContent = this._likes.length;
